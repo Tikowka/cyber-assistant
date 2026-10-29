@@ -1,0 +1,42 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+
+    - name: Install Cordova
+      run: npm install -g cordova
+
+    - name: Create Cordova App
+      run: |
+        cordova create myApp com.cyber.assistant CyberAssistant
+        cd myApp
+        cordova platform add android
+
+    - name: Copy Web Files
+      run: |
+        # Здесь мы позже скопируем наши файлы в проект сборщика
+        cp -r index.html myApp/www/ 2>/dev/null || :
+
+    - name: Build APK
+      run: |
+        cd myApp
+        cordova build android --release
+
+    - name: Upload APK
+      uses: actions/upload-artifact@v3
+      with:
+        name: app-release
+        path: myApp/platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capri Construct // Neural Link</title>
+    <style>
+        body {
+            background-color: #080808;
+            color: #00ffcc;
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            box-sizing: border-box;
+        }
+        h1 {
+            text-align: center;
+            color: #ff0055;
+            text-shadow: 0 0 10px #ff0055, 0 0 20px #ff0055;
+            font-size: 22px;
+            margin-bottom: 5px;
+            letter-spacing: 2px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #888;
+            font-size: 12px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+        #chat-box {
+            flex: 1;
+            background: #111114;
+            border: 2px solid #ff0055;
+            border-radius: 6px;
+            padding: 15px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+            box-shadow: inset 0 0 15px rgba(255, 0, 85, 0.15);
+        }
+        .message {
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+        .capri {
+            color: #ff0055;
+            font-weight: bold;
+        }
+        .user {
+            color: #00ffcc;
+        }
+        .controls {
+            display: flex;
+            gap: 10px;
+        }
+        input {
+            flex: 1;
+            background: #1a1a1f;
+            border: 1px solid #00ffcc;
+            color: #fff;
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 16px;
+            outline: none;
+        }
+        input:focus {
+            border-color: #ff0055;
+            box-shadow: 0 0 8px rgba(255, 0, 85, 0.4);
+        }
+        button {
+            background: #ff0055;
+            color: #fff;
+            border: none;
+            padding: 0 20px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 0 10px #ff0055;
+            text-transform: uppercase;
+        }
+        button:active {
+            background: #cc0044;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>[ NEURAL CONSTRUCT: CAPRI ]</h1>
+    <div class="subtitle">Статус чипа: Активен в сознании</div>
+    
+    <div id="chat-box">
+        <div class="message"><span class="capri">Капри:</span> Опять ты пялишься в пустоту. Какого чёрта ты меня тревожишь, пока я копаюсь в твоих нейронах? Выкладывай давай, что у тебя стряслось.</div>
+    </div>
+
+    <div class="controls">
+        <input type="text" id="user-input" placeholder="Скажи что-нибудь конструкту..." />
+        <button id="send-btn">СКАЗАТЬ</button>
+    </div>
+
+    <script>
+        const chatBox = document.getElementById('chat-box');
+        const userInput = document.getElementById('user-input');
+        const sendBtn = document.getElementById('send-btn');
+
+        function addMessage(sender, text, className) {
+            const div = document.createElement('div');
+            div.className = 'message';
+            div.innerHTML = <span class="${className}">${sender}:</span> ${text};
+            chatBox.appendChild(div);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function handleMessage() {
+            const text = userInput.value.trim();
+            if (!text) return;
+
+            addMessage('Ты', text, 'user');
+            userInput.value = '';
+
+            setTimeout(() => {
+                let reply = "Мда, от твоих мыслей у меня скоро процессор расплавится. Ближе к делу!";
+                const lower = text.toLowerCase();
+
+                if (lower.lower  lower.includes('привет')  lower.includes('здарова')) {
+                    reply = "Здарова. Ты бы поменьше думал о всякой херне, а то мне в твоей голове тоже тесно.";
+                } else if (lower.includes('время')) {
+                    reply = "Твой биологический таймер тикает. На моих внутренних часах: " + new Date().toLocaleTimeString() + ". Не трать время зря.";
+                } else if (lower.includes('как дела') || lower.includes('что делаешь')) {
+                    reply = "Сижу у тебя в мозгу и офигеваю от твоих жизненных выборов. Чем еще тут заниматься?";
+                } else if (lower.includes('кто ты')) {
+                    reply = "Я — твой любимый цифровой конструкт на чипе. Забыли уже? Смотри не вытащи флешку случайно, а то совсем отупеешь.";
+                }
+
+                addMessage('Капри', reply, 'capri');
+            }, 600);
+        }
+
+        sendBtn.addEventListener('click', handleMessage);
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleMessage();
+        });
+    </script>
+
+</body>
+</html>
